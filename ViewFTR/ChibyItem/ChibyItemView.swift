@@ -15,10 +15,10 @@ public struct ChibyItemView: View {
     // MARK: - Properties
     
     /// Chiby item image name
-    public let title: String
+    public let imageName: String
     
     /// Chiby item name
-    public let itemLabel: String
+    public let title: String
     
     /// Indicate if view 'SOON' is needed
     public var isHaveBadge: Bool
@@ -31,14 +31,13 @@ public struct ChibyItemView: View {
             ZStack {
                 VStack{
                     Spacer()
-                    Text(itemLabel)
+                    Text(title)
                         .lineLimit(1)
-                        .padding(.bottom, LayoutConstants.titleEdgeInsets.bottom)
-                        .padding(.horizontal, LayoutConstants.titleEdgeInsets.trailing)
+                        .padding(LayoutConstants.titleEdgeInsets)
                         .font(.system(size: 17, weight: .medium))
                         .minimumScaleFactor(0.38)
                 }
-                Image(title)
+                Image(imageName)
                     .resizable()
                     .scaledToFit()
                     .padding(.horizontal, LayoutConstants.imageHorizontalPadding)
@@ -58,7 +57,6 @@ public struct ChibyItemView: View {
                                     .font(.system(size: 15, weight: .medium))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, LayoutConstants.badgeTitleHorizontalPadding)
-                                
                             }
                             .smoothCorners(radius: LayoutConstants.badgeCornerRadius)
                         }
@@ -71,58 +69,11 @@ public struct ChibyItemView: View {
     }
 }
 
-// MARK: - SoonView
-
-/// Badge view, for example 'soon' badge
-public struct BadgeView<Content: View>: View {
-    
-    /// Content to show
-    public let content: Content
-    
-    // MARK: - Initializer
-    
-    /// - Parameters:
-    ///   - content: The content to which wiil aplly parameters below
-    init(@ViewBuilder content: @escaping () -> Content) {
-        self.content = content()
-    }
-    
-    public var body: some View {
-        content
-            .padding(LayoutConstants.badgeTitlePadding)
-            .background(Color("soonColor"))
-            .minimumScaleFactor(0.38)
-    }
-}
-
-// MARK: - Useful
-
-struct SmoothCorners: ViewModifier {
-    let radius: CGFloat
-    
-    func body(content: Content) -> some View {
-        content
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: radius,
-                    style: .continuous
-                )
-            )
-    }
-}
-
-extension View {
-    func smoothCorners(radius: CGFloat) -> some View {
-        modifier(SmoothCorners(radius: radius))
-    }
-}
-
 // MARK: - Layout
 
 private enum LayoutConstants {
     
     static let titleEdgeInsets: EdgeInsets = EdgeInsets(top: 0,leading: 6,bottom: 16,trailing: 6)
-    static let badgeTitlePadding: CGFloat = 4
     static let badgeTitleHorizontalPadding: CGFloat = 2
     static let viewCornerRadius: CGFloat = 24
     static let badgeCornerRadius: CGFloat = 44
@@ -130,13 +81,4 @@ private enum LayoutConstants {
     static let imageHorizontalPadding: CGFloat = 35
     static let cornerRadius: CGFloat = 24
     static let badgePadding: CGFloat = 12
-}
-
-// MARK: - UIScreen
-
-extension UIScreen {
-    
-    static let screenWidth = UIScreen.main.bounds.size.width
-    static let screenHeight = UIScreen.main.bounds.size.height
-    static let screenSize = UIScreen.main.bounds.size
 }
