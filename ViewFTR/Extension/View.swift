@@ -18,13 +18,11 @@ extension View {
 // MARK: - SmoothCorners
 
 /// Modifier that apply smooth corner radius to  rectangle View
-///
-///  - Parameters:
-///  - radius: The radius of corners
 public struct SmoothCorners: ViewModifier {
     
     // MARK: - Properties
     
+    /// The radius of corners
     public let radius: CGFloat
     
     // MARK: - ViewModifier
