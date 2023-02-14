@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
 
 // MARK: - ChibyItemView
 
@@ -24,8 +23,7 @@ public struct ChibyItemView: View {
     public var isHaveBadge: Bool
     
     // MARK: - View
-    
-    /// View container with label, image and badge if it is needed
+   
     public var body: some View {
         GeometryReader { proxy in
             ZStack {
@@ -63,13 +61,13 @@ public struct ChibyItemView: View {
                     }
                     Spacer()
                 }
-                    .padding(LayoutConstants.badgePadding)
+                .padding(LayoutConstants.badgePadding)
             )
         }
     }
 }
 
-// MARK: - Layout
+// MARK: - LayoutConstants
 
 private enum LayoutConstants {
     

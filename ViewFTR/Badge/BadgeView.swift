@@ -5,13 +5,14 @@
 //  Created by Kazakh on 14.02.2023.
 //
 
-import Foundation
 import SwiftUI
 
 // MARK: - BadgeView
 
 /// Badge view, for example 'soon' badge
 public struct BadgeView<Content: View>: View {
+    
+    // MARK: - Properties
     
     /// Content to show
     public let content: Content
@@ -20,9 +21,11 @@ public struct BadgeView<Content: View>: View {
     
     /// - Parameters:
     ///   - content: The content to which wiil aplly parameters below
-    init(@ViewBuilder content: @escaping () -> Content) {
+    public init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content()
     }
+    
+    // MARK: - View
     
     public var body: some View {
         content
@@ -32,7 +35,7 @@ public struct BadgeView<Content: View>: View {
     }
 }
 
-// MARK: - Layout
+// MARK: - LayoutConstants
 
 private enum LayoutConstants {
     static let badgeTitlePadding: CGFloat = 4

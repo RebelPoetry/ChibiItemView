@@ -5,7 +5,6 @@
 //  Created by Kazakh on 14.02.2023.
 //
 
-import Foundation
 import SwiftUI
 
 // MARK: - UIScreen

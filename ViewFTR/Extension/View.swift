@@ -5,13 +5,12 @@
 //  Created by Kazakh on 14.02.2023.
 //
 
-import Foundation
 import SwiftUI
 
 // MARK: - View
 
 extension View {
-    func smoothCorners(radius: CGFloat) -> some View {
+    public func smoothCorners(radius: CGFloat) -> some View {
         modifier(SmoothCorners(radius: radius))
     }
 }
@@ -23,7 +22,12 @@ extension View {
 ///  - Parameters:
 ///  - radius: The radius of corners
 struct SmoothCorners: ViewModifier {
+    
+    // MARK: - Properties
+    
     let radius: CGFloat
+    
+    // MARK: - ViewModifier
     
     func body(content: Content) -> some View {
         content
