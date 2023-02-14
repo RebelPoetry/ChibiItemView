@@ -21,15 +21,15 @@ extension View {
 ///
 ///  - Parameters:
 ///  - radius: The radius of corners
-struct SmoothCorners: ViewModifier {
+public struct SmoothCorners: ViewModifier {
     
     // MARK: - Properties
     
-    let radius: CGFloat
+    public let radius: CGFloat
     
     // MARK: - ViewModifier
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .clipShape(
                 RoundedRectangle(
