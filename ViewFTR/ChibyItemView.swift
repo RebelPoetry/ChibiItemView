@@ -15,7 +15,7 @@ public struct ChibyItemView: View {
     // MARK: - Properties
     
     /// Chiby item image name
-    public let imageName: String
+    public let title: String
     
     /// Chiby item name
     public let itemLabel: String
@@ -33,46 +33,34 @@ public struct ChibyItemView: View {
                     Spacer()
                     Text(itemLabel)
                         .lineLimit(1)
-                        .padding(.bottom, LayoutConstants.labelPaddingBottom)
-                        .padding(.horizontal, LayoutConstants.itemLabelHorizontalPadding)
+                        .padding(.bottom, LayoutConstants.titleEdgeInsets.bottom)
+                        .padding(.horizontal, LayoutConstants.titleEdgeInsets.trailing)
                         .font(.system(size: 17, weight: .medium))
                         .minimumScaleFactor(0.38)
                 }
-                VStack {
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .padding(.horizontal, LayoutConstants.imageHorizontalPadding)
-                        .frame(height: proxy.size.width / LayoutConstants.imagScaleFactor, alignment: .center)
-                }
+                Image(title)
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.horizontal, LayoutConstants.imageHorizontalPadding)
+                    .frame(height: proxy.size.width / LayoutConstants.imageScaleFactor)
             }
-            .frame(width: proxy.size.width, height: proxy.size.width)
+            .frame(height: proxy.size.width)
             .background(Color.white)
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: LayoutConstants.viewCornerRadius,
-                    style: .continuous
-                )
-            )
+            .smoothCorners(radius: LayoutConstants.viewCornerRadius)
             .overlay(
                 VStack {
                     HStack {
                         if isHaveBadge {
                             Spacer()
-                            SoonBadgeView {
+                            BadgeView {
                                 Text("SOON")
                                     .lineLimit(1)
                                     .font(.system(size: 15, weight: .medium))
                                     .foregroundColor(.white)
-                                    .padding(.horizontal, LayoutConstants.badgeLabelHorizontalPadding)
+                                    .padding(.horizontal, LayoutConstants.badgeTitleHorizontalPadding)
                                 
                             }
-                            .clipShape(
-                                RoundedRectangle(
-                                    cornerRadius: LayoutConstants.badgeCornerRadius,
-                                    style: .continuous
-                                )
-                            )
+                            .smoothCorners(radius: LayoutConstants.badgeCornerRadius)
                         }
                     }
                     Spacer()
@@ -86,24 +74,46 @@ public struct ChibyItemView: View {
 // MARK: - SoonView
 
 /// Badge view, for example 'soon' badge
-public struct SoonBadgeView<Content: View>: View {
+public struct BadgeView<Content: View>: View {
     
     /// Content to show
-    public let content: () -> Content
+    public let content: Content
     
     // MARK: - Initializer
     
     /// - Parameters:
     ///   - content: The content to which wiil aplly parameters below
     init(@ViewBuilder content: @escaping () -> Content) {
-        self.content = content
+        self.content = content()
     }
     
     public var body: some View {
-        content()
-            .padding(LayoutConstants.badgeLabelPadding)
+        content
+            .padding(LayoutConstants.badgeTitlePadding)
             .background(Color("soonColor"))
             .minimumScaleFactor(0.38)
+    }
+}
+
+// MARK: - Useful
+
+struct SmoothCorners: ViewModifier {
+    let radius: CGFloat
+    
+    func body(content: Content) -> some View {
+        content
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: radius,
+                    style: .continuous
+                )
+            )
+    }
+}
+
+extension View {
+    func smoothCorners(radius: CGFloat) -> some View {
+        modifier(SmoothCorners(radius: radius))
     }
 }
 
@@ -111,16 +121,15 @@ public struct SoonBadgeView<Content: View>: View {
 
 private enum LayoutConstants {
     
-    static let badgeLabelPadding: CGFloat = 4
-    static let badgeLabelHorizontalPadding: CGFloat = 2
+    static let titleEdgeInsets: EdgeInsets = EdgeInsets(top: 0,leading: 6,bottom: 16,trailing: 6)
+    static let badgeTitlePadding: CGFloat = 4
+    static let badgeTitleHorizontalPadding: CGFloat = 2
     static let viewCornerRadius: CGFloat = 24
     static let badgeCornerRadius: CGFloat = 44
-    static let imagScaleFactor: CGFloat = 1.7
-    static let itemLabelHorizontalPadding: CGFloat = 6
+    static let imageScaleFactor: CGFloat = 1.7
     static let imageHorizontalPadding: CGFloat = 35
     static let cornerRadius: CGFloat = 24
     static let badgePadding: CGFloat = 12
-    static let labelPaddingBottom: CGFloat = 16
 }
 
 // MARK: - UIScreen

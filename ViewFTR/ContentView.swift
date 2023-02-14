@@ -14,8 +14,8 @@ struct ContentView: View {
         VStack{
             Spacer()
             HStack(spacing: 16) {
-                ChibyItemView(imageName: "radar", itemLabel: "Радар", isHaveBadge: true)
-                ChibyItemView(imageName: "pack", itemLabel: "Мой инвентарь", isHaveBadge: true)
+                ChibyItemView(title: "radar", itemLabel: "Радар", isHaveBadge: true)
+                ChibyItemView(title: "pack", itemLabel: "Мой инвентарь", isHaveBadge: true)
             }
             .padding(16)
             Spacer()
